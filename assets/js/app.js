@@ -8,6 +8,8 @@ const COLLECTIONS = {
   "epica-dama": "EPICA dama",
 };
 
+// Número de WhatsApp del negocio en formato internacional, sin + ni espacios. Cámbialo aquí si el número cambia.
+const WHATSAPP_NUMBER = "573242483479";
 
 // Límite inicial de tarjetas; el botón “Mostrar más” añade otro grupo de este tamaño.
 const PAGE_SIZE = 24;
@@ -37,6 +39,32 @@ function normalize(value) {
     .toLocaleLowerCase("es");
 }
 
+// Prepara el enlace de WhatsApp. Solo incluye una referencia cuando está confirmada;
+// para imágenes sin código, identifica el producto por marca, colección y página.
+function buildWhatsAppUrl(product = null) {
+  let message;
+  if (!product) {
+    message =
+      "Hola, quisiera hacer una consulta sobre el catálogo de Póngase las Gafas.";
+  } else {
+    // Usa la etiqueta legible de colección y reserva la referencia directa para códigos confirmados.
+    const collection = COLLECTIONS[product.coleccion] || "catálogo";
+    const reference = String(product.referencia_visible || "").trim();
+    const confirmed = product.estado_referencia === "confirmada" && reference;
+    if (confirmed) {
+      message = `Hola, quisiera cotizar ${product.marca}, referencia ${reference}. La vi en la colección ${collection}.`;
+    } else {
+      const codeNote = reference
+        ? ` El código visible está pendiente de verificar.`
+        : "";
+      message = `Hola, quisiera consultar por una imagen de ${product.marca}, colección ${collection}, página ${product.pagina}.${codeNote}`;
+    }
+  }
+  // Codifica tildes, espacios y signos para que el texto viaje correctamente en la URL.
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
+
+// Completa los filtros de colección y marca con opciones que existen en los datos.
 function fillFilterOptions() {
   // Las colecciones se definen una vez en COLLECTIONS; las marcas se deduplican desde el inventario.
   Object.entries(COLLECTIONS).forEach(([value, label]) => {
@@ -161,6 +189,22 @@ function createProductCard(product) {
   if (product.estado_referencia !== "confirmada")
     reviewBadge.classList.remove("d-none");
 
+  // El mensaje de cotización usa los datos de este producto y su estado de referencia.
+  const quoteLink = card.querySelector(".product-quote");
+  quoteLink.href = buildWhatsAppUrl(product);
+  quoteLink.setAttribute(
+    "aria-label",
+    `Cotizar por WhatsApp: ${product.marca}, ${label}`,
+  );
+
+  // El botón de ampliación guarda la imagen y su título en atributos para el manejador delegado.
+  const zoomButton = card.querySelector(".zoom-button");
+  zoomButton.dataset.image = product.imagen_extraida;
+  zoomButton.dataset.title = `${product.marca} · ${label}`;
+  zoomButton.setAttribute(
+    "aria-label",
+    `Ampliar imagen de ${product.marca}, ${label}`,
+  );
   return card;
 }
 
@@ -203,6 +247,10 @@ async function initializeCatalog() {
     console.error(error);
   }
 }
+
+// Enlaces generales: consultas sin una referencia de producto específica.
+document.querySelector("#general-whatsapp").href = buildWhatsAppUrl();
+document.querySelector("#footer-whatsapp").href = buildWhatsAppUrl();
 
 // Eventos de búsqueda, filtros, limpieza y carga progresiva de productos.
 searchInput.addEventListener("input", resetAndRender);
@@ -249,6 +297,23 @@ document
     brandFilter.value = link.dataset.brandLink;
     searchInput.value = "";
     resetAndRender();
+  });
+
+// El botón + abre la imagen completa; así se conservan visibles sus variantes agrupadas.
+productGrid.addEventListener("click", (event) => {
+  // Delegación: funciona también con tarjetas que se crean después de cargar la página.
+  const button = event.target.closest(".zoom-button");
+  if (!button) return;
+  modalImage.src = button.dataset.image;
+  modalImage.alt = button.dataset.title;
+  modalTitle.textContent = button.dataset.title;
+});
+
+// Libera la referencia de la imagen al cerrar el modal.
+document
+  .querySelector("#image-modal")
+  .addEventListener("hidden.bs.modal", () => {
+    modalImage.removeAttribute("src");
   });
 
 initializeCatalog();
