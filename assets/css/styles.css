@@ -1,1 +1,1011 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap");
+
+/* Variables compartidas de color y tipografía para mantener consistente la identidad visual. */
+:root {
+  --ink: #111110;
+  --ink-soft: #1b1a18;
+  --gold: #d9aa4b;
+  --gold-light: #efc86f;
+  --paper: #f5f2eb;
+  --white: #fffefa;
+  --muted: #aaa69d;
+  --line: rgba(255, 255, 255, 0.13);
+  --font-display: "Barlow Condensed", Impact, "Arial Narrow", sans-serif;
+  --font-body: "DM Sans", Arial, sans-serif;
+}
+
+/* Estilos base y acceso por teclado para facilitar la navegación del sitio. */
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 86px;
+}
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--white);
+  font-family: var(--font-body);
+}
+a {
+  color: inherit;
+}
+.skip-link {
+  /* Permanece fuera de pantalla hasta que alguien navegue con teclado. */
+  position: absolute;
+  z-index: 2000;
+  top: -60px;
+  left: 12px;
+  padding: 10px 14px;
+  background: var(--gold);
+  color: var(--ink);
+  font-weight: 700;
+}
+.skip-link:focus {
+  top: 12px;
+}
+
+/* Encabezado fijo: marca, navegación y acceso general a WhatsApp. */
+.site-nav {
+  min-height: 82px;
+  background: rgba(17, 17, 16, 0.96);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+}
+.nav-container {
+  min-height: 82px;
+}
+.brand-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+}
+.brand-lockup img {
+  width: 64px;
+  height: 64px;
+  border: 1px solid rgba(217, 170, 75, 0.75);
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 3px rgba(217, 170, 75, 0.08);
+}
+.brand-name,
+.footer-brand {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 0.9;
+}
+.brand-name span,
+.footer-brand span {
+  display: block;
+  color: var(--gold);
+}
+.site-nav .nav-link {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+.site-nav .nav-link:hover,
+.site-nav .nav-link:focus {
+  color: var(--gold-light);
+}
+.nav-cta {
+  display: inline-block;
+  padding: 12px 17px;
+  border: 1px solid var(--gold);
+  color: var(--gold-light);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+.nav-cta:hover {
+  background: var(--gold);
+  color: var(--ink);
+}
+.navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.32);
+}
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 0.2rem rgba(217, 170, 75, 0.2);
+}
+
+/* Portada: fondo, texto principal, fotografía y cinta de marca. */
+.hero-section {
+  position: relative;
+  overflow: hidden;
+  min-height: 650px;
+  background: radial-gradient(
+    ellipse at 73% 52%,
+    #332b1d 0,
+    #1e1b16 24%,
+    var(--ink) 59%
+  );
+}
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.09;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.2'/%3E%3C/svg%3E");
+}
+.hero-container {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  min-height: 650px;
+  padding-top: 56px;
+  padding-bottom: 70px;
+}
+.hero-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 590px;
+  padding: 24px 0 38px;
+}
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 18px;
+  color: var(--gold-light);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+.eyebrow-line {
+  display: inline-block;
+  width: 30px;
+  height: 1px;
+  background: var(--gold);
+}
+h1,
+h2,
+h3,
+p {
+  overflow-wrap: break-word;
+}
+.hero-copy h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(68px, 8vw, 118px);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 0.82;
+  text-transform: uppercase;
+}
+.hero-copy h1 span {
+  color: var(--gold);
+}
+.hero-lead {
+  max-width: 370px;
+  margin: 27px 0 25px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 15px;
+  line-height: 1.75;
+}
+.button-gold {
+  /* Estilo compartido para las acciones principales de la portada y el contacto. */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  min-height: 52px;
+  padding: 0 20px;
+  background: var(--gold);
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+.button-gold:hover {
+  transform: translateY(-2px);
+  background: var(--gold-light);
+  color: var(--ink);
+}
+.button-gold span {
+  font-size: 18px;
+}
+.hero-note {
+  margin: 16px 0 0;
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 11px;
+}
+.hero-visual {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 470px;
+}
+.hero-image-frame {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 420px);
+  height: 422px;
+  padding: 11px;
+  border: 1px solid rgba(217, 170, 75, 0.72);
+  background: #e9e5dd;
+  transform: rotate(3deg);
+  box-shadow: 19px 22px 0 rgba(0, 0, 0, 0.28);
+}
+.hero-image-frame::before {
+  position: absolute;
+  top: -9px;
+  left: -9px;
+  width: 55px;
+  height: 55px;
+  border-top: 2px solid var(--gold);
+  border-left: 2px solid var(--gold);
+  content: "";
+}
+.hero-image-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+}
+.hero-image-tag {
+  /* Cinta decorativa superpuesta al marco de la fotografía de portada. */
+  position: absolute;
+  z-index: 2;
+  top: 23px;
+  right: auto;
+  bottom: auto;
+  left: -51px;
+  display: flex;
+  width: 178px;
+  align-items: baseline;
+  justify-content: center;
+  gap: 5px;
+  padding: 7px 8px;
+  border-top: 1px solid var(--gold-light);
+  border-bottom: 1px solid var(--gold-light);
+  background: rgba(17, 17, 16, 0.96);
+  color: #fff;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  transform: rotate(-45deg);
+  transform-origin: center;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+.hero-image-tag span,
+.hero-image-tag em {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0.035em;
+}
+.hero-image-tag em {
+  color: var(--gold-light);
+}
+.hero-orbit {
+  position: absolute;
+  border: 1px solid rgba(217, 170, 75, 0.24);
+  border-radius: 50%;
+  transform: rotate(-21deg);
+}
+.orbit-one {
+  width: 480px;
+  height: 300px;
+}
+.orbit-two {
+  width: 550px;
+  height: 360px;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.hero-side-label {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  writing-mode: vertical-rl;
+}
+.hero-bottom-line {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: var(--line);
+}
+.hero-bottom-line span {
+  display: block;
+  width: 18%;
+  height: 1px;
+  background: var(--gold);
+}
+
+/* Espaciado común y tarjetas de acceso a las colecciones principales. */
+.section-pad {
+  padding: 104px 0;
+}
+.collection-section {
+  background: var(--paper);
+  color: var(--ink);
+}
+.eyebrow-dark {
+  color: #75633f;
+}
+.section-heading {
+  margin-bottom: 42px;
+}
+.section-heading h2,
+.catalog-heading h2,
+.contact-inner h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(48px, 6vw, 76px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 0.88;
+  text-transform: uppercase;
+}
+.section-heading h2 span {
+  color: #a77b28;
+}
+.section-intro {
+  max-width: 285px;
+  margin: 0 0 4px;
+  color: #6d6a63;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.collection-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 225px;
+  overflow: hidden;
+  padding: 19px;
+  background: var(--ink);
+  color: white;
+  text-decoration: none;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+}
+.collection-tile::after {
+  /* Aro ornamental que acompaña cada acceso a colección. */
+  position: absolute;
+  right: -24px;
+  bottom: -64px;
+  width: 160px;
+  height: 160px;
+  border: 1px solid rgba(217, 170, 75, 0.54);
+  border-radius: 50%;
+  content: "";
+  transition: transform 0.3s ease;
+}
+.collection-tile:hover {
+  color: white;
+  transform: translateY(-5px);
+  box-shadow: 0 16px 30px rgba(17, 17, 16, 0.18);
+}
+.collection-tile:hover::after {
+  transform: scale(1.2);
+}
+.tile-number {
+  position: relative;
+  z-index: 1;
+  color: var(--gold-light);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+.tile-title {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-display);
+  font-size: clamp(32px, 3.4vw, 48px);
+  font-weight: 800;
+  line-height: 0.8;
+  text-transform: uppercase;
+}
+.tile-title small {
+  color: var(--gold);
+  font-size: 0.58em;
+}
+.tile-arrow {
+  position: absolute;
+  z-index: 2;
+  right: 19px;
+  bottom: 16px;
+  color: var(--gold);
+  font-size: 22px;
+}
+.tile-chrome {
+  background: linear-gradient(140deg, #111 20%, #27211a);
+}
+.tile-ray-optica {
+  background: linear-gradient(140deg, #181c20, #32332f);
+}
+.tile-ray-sol {
+  background: linear-gradient(140deg, #242014, #5c4823);
+}
+.tile-multi {
+  background: linear-gradient(140deg, #1a1918, #454037);
+}
+.tile-epica-hombre {
+  background: linear-gradient(140deg, #161a1b, #35413e);
+}
+.tile-epica-dama {
+  background: linear-gradient(140deg, #211b1a, #553e36);
+}
+
+/* Accesos visuales por marca, calculados a partir de los productos multimarca. */
+.brand-highlights-section {
+  background: #e9e4d9;
+  color: var(--ink);
+}
+.brand-highlights-section .section-heading h2 span {
+  color: #9b7024;
+}
+.brand-collection-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.brand-collection-tile {
+  position: relative;
+  display: flex;
+  min-height: 205px;
+  overflow: hidden;
+  align-items: flex-end;
+  border: 1px solid rgba(17, 17, 16, 0.12);
+  background: #26231d;
+  color: #fff;
+  text-decoration: none;
+}
+.brand-collection-tile::after {
+  position: absolute;
+  inset: 20% 0 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(12, 12, 11, 0.25) 15%,
+    rgba(12, 12, 11, 0.94) 100%
+  );
+  content: "";
+}
+.brand-collection-tile img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+.brand-collection-tile:hover {
+  color: #fff;
+}
+.brand-collection-tile:hover img {
+  transform: scale(1.06);
+}
+.brand-collection-copy {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 100%;
+  gap: 5px;
+  padding: 16px;
+}
+.brand-collection-copy small {
+  color: var(--gold-light);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.brand-collection-copy strong {
+  max-width: 90%;
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+.brand-tile-arrow {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  color: var(--gold-light);
+  font-size: 21px;
+}
+
+/* Búsqueda, filtros y tarjetas del catálogo cargado desde productos.json. */
+.catalog-section {
+  background: var(--ink);
+}
+.catalog-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 36px;
+}
+.catalog-heading h2 span {
+  color: var(--gold);
+}
+.catalog-caption {
+  max-width: 250px;
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+  text-align: right;
+}
+.catalog-toolbar {
+  /* Cuadrícula de controles: búsqueda, colección, marca y limpieza de filtros. */
+  display: grid;
+  grid-template-columns: minmax(220px, 1.5fr) minmax(190px, 1fr) minmax(
+      180px,
+      1fr
+    ) auto;
+  gap: 9px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  background: #191918;
+}
+.search-field,
+.filter-field {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  background: #242321;
+}
+.search-field {
+  gap: 10px;
+  padding: 0 14px;
+}
+.search-field svg {
+  flex: 0 0 18px;
+  width: 18px;
+  fill: none;
+  stroke: var(--gold);
+  stroke-linecap: round;
+  stroke-width: 1.7;
+}
+.search-field input,
+.filter-field select {
+  width: 100%;
+  height: 48px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #fff;
+  font: 12px var(--font-body);
+}
+.search-field input::placeholder {
+  color: #9d9a93;
+}
+.search-field input:focus-visible,
+.filter-field select:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: -3px;
+}
+.filter-field select {
+  padding: 0 34px 0 14px;
+  color-scheme: dark;
+  cursor: pointer;
+}
+.filter-field option {
+  background: #242321;
+}
+.clear-filters {
+  min-height: 48px;
+  padding: 0 16px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.78);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+.clear-filters:hover {
+  border-color: var(--gold);
+  color: var(--gold-light);
+}
+.results-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 25px 0 16px;
+}
+.results-row p {
+  flex: none;
+  margin: 0;
+  color: #c7c2b8;
+  font-size: 11px;
+}
+.results-rule {
+  width: 100%;
+  height: 1px;
+  background: var(--line);
+}
+.product-grid {
+  /* El número de columnas cambia en los breakpoints para conservar legibilidad. */
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 17px;
+}
+.product-card {
+  min-width: 0;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: #1b1a18;
+  transition:
+    transform 0.22s ease,
+    border-color 0.22s ease;
+}
+.product-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(217, 170, 75, 0.54);
+}
+.product-image-wrap {
+  /* Mantiene una proporción estable para la imagen original con variantes agrupadas. */
+  position: relative;
+  overflow: hidden;
+  background: #e7e4dd;
+  aspect-ratio: 1.16 / 1;
+}
+.product-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.35s ease;
+}
+.product-card:hover .product-image {
+  transform: scale(1.035);
+}
+.product-collection {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  max-width: calc(100% - 56px);
+  padding: 6px 8px;
+  background: rgba(17, 17, 16, 0.88);
+  color: var(--gold-light);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.zoom-button {
+  /* Activa el modal de Bootstrap con la imagen completa del catálogo. */
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(17, 17, 16, 0.88);
+  color: var(--gold-light);
+  font-size: 21px;
+  line-height: 1;
+}
+.zoom-button:hover,
+.zoom-button:focus-visible {
+  background: var(--gold);
+  color: var(--ink);
+}
+.product-card-body {
+  padding: 14px 14px 13px;
+}
+.product-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  color: #aaa69d;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.product-page {
+  white-space: nowrap;
+}
+.product-reference-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 35px;
+  margin: 5px 0 10px;
+}
+.product-reference {
+  margin: 0;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1;
+}
+.review-badge {
+  padding: 4px 6px;
+  border: 1px solid rgba(217, 170, 75, 0.48);
+  color: var(--gold-light);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.product-quote {
+  /* Enlace de cotización individual; el JavaScript compone su mensaje de WhatsApp. */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  color: var(--gold-light);
+  font-size: 10px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.product-quote:hover {
+  color: #fff;
+}
+.product-quote span {
+  font-size: 15px;
+}
+.catalog-footnote {
+  margin: 21px 0 0;
+  color: #8c8880;
+  font-size: 10px;
+  line-height: 1.6;
+}
+.load-more-wrap {
+  display: flex;
+  justify-content: center;
+  padding-top: 31px;
+}
+.button-outline {
+  min-height: 48px;
+  padding: 0 20px;
+  border: 1px solid rgba(217, 170, 75, 0.7);
+  background: transparent;
+  color: var(--gold-light);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+.button-outline:hover {
+  background: var(--gold);
+  color: var(--ink);
+}
+.load-more span {
+  margin-left: 17px;
+  font-size: 15px;
+}
+.empty-state {
+  padding: 70px 20px;
+  color: white;
+  text-align: center;
+}
+.empty-mark {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 16px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  color: var(--gold);
+  font-family: var(--font-display);
+  font-size: 26px;
+}
+.empty-state h3 {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.empty-state p {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* Contacto, redes sociales y pie de página. */
+.contact-section {
+  position: relative;
+  overflow: hidden;
+  padding: 76px 0;
+  background: var(--gold);
+  color: var(--ink);
+}
+.contact-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+.contact-inner .eyebrow {
+  color: #59451f;
+}
+.contact-inner .eyebrow-line {
+  background: var(--ink);
+}
+.contact-inner h2 {
+  font-size: clamp(45px, 6vw, 72px);
+}
+.contact-inner h2 span {
+  color: #fff7e5;
+}
+.contact-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 15px;
+}
+.button-contact {
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--gold-light);
+}
+.button-contact:hover {
+  background: #29251c;
+  color: white;
+}
+.social-links {
+  /* Agrupa los perfiles externos de Instagram y TikTok en el bloque de contacto. */
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: opacity 0.2s ease;
+}
+.social-link:hover,
+.social-link:focus-visible {
+  color: var(--ink);
+  opacity: 0.65;
+}
+.social-link svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+.social-link svg .social-dot {
+  fill: currentColor;
+  stroke: none;
+}
+.social-arrow {
+  font-size: 14px;
+}
+.contact-decoration {
+  position: absolute;
+  right: 7%;
+  bottom: -93px;
+  color: rgba(17, 17, 16, 0.06);
+  font-family: var(--font-display);
+  font-size: 300px;
+  font-weight: 900;
+  line-height: 1;
+}
+.site-footer {
+  background: #0a0a09;
+}
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 89px;
+}
+.footer-brand {
+  color: white;
+  font-size: 17px;
+  text-decoration: none;
+}
+.footer-brand span {
+  display: inline;
+  margin-left: 4px;
+}
+.footer-inner p {
+  margin: 0;
+  color: #77736b;
+  font-size: 10px;
+}
+.back-top {
+  color: #c8c2b7;
+  font-size: 10px;
+  text-decoration: none;
+}
+.back-top:hover {
+  color: var(--gold);
+}
+
+/* Vista ampliada del producto en el modal de Bootstrap. */
+.image-modal .modal-content {
+  border: 1px solid rgba(217, 170, 75, 0.45);
+  border-radius: 0;
+  background: #f2f0eb;
+}
+.image-modal .modal-header {
+  border-bottom: 1px solid rgba(17, 17, 16, 0.12);
+}
+.image-modal .modal-kicker {
+  margin: 0 0 3px;
+  color: #92702d;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+.image-modal .modal-title {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 24px !important;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.image-modal .modal-body {
+  padding: 8px;
+  text-align: center;
+}
+.image-modal .modal-body img {
+  display: block;
+  width: 100%;
+  max-height: 78vh;
+  object-fit: contain;
+}
+.noscript-message {
+  margin: 0;
+  padding: 18px;
+  background: var(--gold);
+  color: var(--ink);
+  text-align: center;
+}
 
