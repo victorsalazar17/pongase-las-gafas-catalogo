@@ -8,6 +8,7 @@ const COLLECTIONS = {
   "epica-dama": "EPICA dama",
 };
 
+
 // Límite inicial de tarjetas; el botón “Mostrar más” añade otro grupo de este tamaño.
 const PAGE_SIZE = 24;
 
@@ -27,8 +28,104 @@ const modalTitle = document.querySelector("#image-modal-title");
 let products = [];
 let visibleCount = PAGE_SIZE;
 
+// Ignora tildes y diferencias entre mayúsculas y minúsculas al buscar.
+function normalize(value) {
+  // La descomposición Unicode separa letras y tildes para que “épica” y “epica” coincidan.
+  return String(value ?? "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLocaleLowerCase("es");
+}
+
+function fillFilterOptions() {
+  // Las colecciones se definen una vez en COLLECTIONS; las marcas se deduplican desde el inventario.
+  Object.entries(COLLECTIONS).forEach(([value, label]) => {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = label;
+    collectionFilter.append(option);
+  });
+
+  [...new Set(products.map((product) => product.marca))]
+    .sort((a, b) => a.localeCompare(b, "es"))
+    .forEach((brand) => {
+      const option = document.createElement("option");
+      option.value = brand;
+      option.textContent = brand;
+      brandFilter.append(option);
+    });
+
+  fillBrandCollections();
+}
+
+// Crea accesos rápidos para marcas multimarca con cuatro imágenes o más.
+function fillBrandCollections() {
+  const counts = new Map();
+  products
+    .filter((product) => product.coleccion === "monturas-marcas")
+    .forEach((product) => {
+      counts.set(product.marca, (counts.get(product.marca) || 0) + 1);
+    });
+
+  // El umbral evita mostrar accesos vacíos o poco representativos; el orden prioriza catálogos amplios.
+  const featuredBrands = [...counts.entries()]
+    .filter(([, count]) => count >= 4)
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "es"));
+
+  const tiles = featuredBrands.map(([brand, count]) => {
+    // La primera ficha disponible sirve como imagen de portada para el acceso de esa marca.
+    const firstProduct = products.find(
+      (product) =>
+        product.coleccion === "monturas-marcas" && product.marca === brand,
+    );
+    const link = document.createElement("a");
+    link.className = "brand-collection-tile";
+    link.href = "#catalogo";
+    link.dataset.brandLink = brand;
+
+    const image = document.createElement("img");
+    image.src = firstProduct.imagen_extraida;
+    image.alt = `${brand}, selección de monturas del catálogo multimarca`;
+    image.loading = "lazy";
+
+    const copy = document.createElement("span");
+    copy.className = "brand-collection-copy";
+    const countLabel = document.createElement("small");
+    countLabel.textContent = `${count} ${count === 1 ? "MODELO" : "MODELOS"} · MULTIMARCA`;
+    const brandName = document.createElement("strong");
+    // textContent inserta el nombre como texto y evita interpretarlo como marcado HTML.
+    brandName.textContent = brand;
+    const arrow = document.createElement("span");
+    arrow.className = "brand-tile-arrow";
+    arrow.setAttribute("aria-hidden", "true");
+    arrow.textContent = "↗";
+
+    copy.append(countLabel, brandName);
+    link.append(image, copy, arrow);
+    return link;
+  });
+
+  // Reemplaza el contenido de una sola vez para evitar duplicados al inicializar la vista.
+  document.querySelector("#brand-collection-links").replaceChildren(...tiles);
+}
+
+// Aplica en conjunto la búsqueda y los filtros seleccionados por la persona usuaria.
 function filteredProducts() {
-  return products;
+  const query = normalize(searchInput.value.trim());
+  const collection = collectionFilter.value;
+  const brand = brandFilter.value;
+
+  // Los criterios se combinan: un producto debe cumplir búsqueda, colección y marca seleccionadas.
+  return products.filter((product) => {
+    const searchable = normalize(
+      `${product.marca} ${product.referencia_visible} ${product.coleccion} ${COLLECTIONS[product.coleccion]}`,
+    );
+    return (
+      (!query || searchable.includes(query)) &&
+      (!collection || product.coleccion === collection) &&
+      (!brand || product.marca === brand)
+    );
+  });
 }
 
 // Define el texto visible de la referencia según su estado de confirmación.
@@ -82,6 +179,12 @@ function renderCatalog() {
   );
 }
 
+// Reinicia la paginación cuando cambia la búsqueda o alguno de los filtros.
+function resetAndRender() {
+  visibleCount = PAGE_SIZE;
+  renderCatalog();
+}
+
 // Descarga productos.json al abrir el sitio desde HTTP/HTTPS y prepara el catálogo.
 async function initializeCatalog() {
   try {
@@ -90,6 +193,8 @@ async function initializeCatalog() {
     if (!response.ok)
       throw new Error(`No se pudo cargar el catálogo (${response.status}).`);
     products = await response.json();
+    // Los filtros se construyen después de cargar los datos para reflejar solo opciones disponibles.
+    fillFilterOptions();
     renderCatalog();
   } catch (error) {
     resultsCount.textContent = "No fue posible cargar el catálogo.";
@@ -98,5 +203,52 @@ async function initializeCatalog() {
     console.error(error);
   }
 }
+
+// Eventos de búsqueda, filtros, limpieza y carga progresiva de productos.
+searchInput.addEventListener("input", resetAndRender);
+collectionFilter.addEventListener("change", resetAndRender);
+brandFilter.addEventListener("change", resetAndRender);
+document.querySelector("#clear-filters").addEventListener("click", () => {
+  // Ambos botones de limpieza restablecen los tres criterios y vuelven al primer bloque de resultados.
+  searchInput.value = "";
+  collectionFilter.value = "";
+  brandFilter.value = "";
+  resetAndRender();
+});
+document.querySelector("#empty-clear").addEventListener("click", () => {
+  searchInput.value = "";
+  collectionFilter.value = "";
+  brandFilter.value = "";
+  resetAndRender();
+});
+loadMoreButton.addEventListener("click", () => {
+  // Cada clic amplía el bloque visible sin volver a solicitar el inventario.
+  visibleCount += PAGE_SIZE;
+  renderCatalog();
+});
+
+// Las tarjetas de colección seleccionan su filtro y llevan al catálogo.
+document
+  .querySelector("#collection-links")
+  .addEventListener("click", (event) => {
+    const link = event.target.closest("[data-collection-link]");
+    if (!link) return;
+    collectionFilter.value = link.dataset.collectionLink;
+    brandFilter.value = "";
+    searchInput.value = "";
+    resetAndRender();
+  });
+
+// Las tarjetas de marca limitan el catálogo a esa marca dentro de Multimarca.
+document
+  .querySelector("#brand-collection-links")
+  .addEventListener("click", (event) => {
+    const link = event.target.closest("[data-brand-link]");
+    if (!link) return;
+    collectionFilter.value = "monturas-marcas";
+    brandFilter.value = link.dataset.brandLink;
+    searchInput.value = "";
+    resetAndRender();
+  });
 
 initializeCatalog();
