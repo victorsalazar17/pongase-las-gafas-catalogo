@@ -416,6 +416,10 @@ p {
 .tile-epica-dama {
   background: linear-gradient(140deg, #211b1a, #553e36);
 }
+/* Identidad visual del acceso único que agrupa los dos catálogos ATELO. */
+.tile-atelo {
+  background: linear-gradient(140deg, #171615, #8c6726);
+}
 
 /* Accesos visuales por marca, calculados a partir de los productos multimarca. */
 .brand-highlights-section {
