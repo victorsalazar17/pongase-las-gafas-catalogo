@@ -45,7 +45,7 @@ chatgpt-web-gafas/
     │   │   ├── ray-ban-optica/
     │   │   └── ray-ban-sol/
     │   ├── logo/
-    │   └── hero.png
+    │   └── hero-monturas.png
     └── js/
         └── app.js
 ```
