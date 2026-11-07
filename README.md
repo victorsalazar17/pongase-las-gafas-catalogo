@@ -8,7 +8,7 @@ Desarrollé este catálogo web para presentar las colecciones de **Póngase las 
 
 - Catálogo dinámico que carga sus fichas desde `assets/data/productos.json`.
 - Búsqueda por marca, referencia o colección, con filtros combinables.
-- Colecciones Chrome Hearts, Ray-Ban óptica, Ray-Ban de sol, Multimarca y EPICA para hombre y dama.
+- Colecciones Chrome Hearts, Ray-Ban óptica, Ray-Ban de sol, Multimarca, EPICA para hombre y dama, y ATELO (catálogos N1 y N2 reunidos en una colección).
 - Imágenes originales agrupadas por variantes de color y opción para ampliarlas.
 - Enlaces de cotización por WhatsApp con mensajes según el estado de la referencia.
 - Accesos a Instagram y TikTok.
@@ -37,6 +37,7 @@ chatgpt-web-gafas/
     │   └── productos.json
     ├── img/
     │   ├── catalogo/
+    │   │   ├── atelo/
     │   │   ├── chrome-hearts/
     │   │   ├── epica-acetato/
     │   │   │   ├── dama/
@@ -95,7 +96,7 @@ Al añadir o corregir productos:
 3. Escribo referencias entre comillas, por ejemplo `"0840"`, para conservar ceros iniciales.
 4. Uso `confirmada` solo si el código está confirmado, `revisar` si no es fiable y `sin_codigo` si no aparece un código; en el último caso `referencia_visible` debe ser `""`.
 5. Mantengo el nombre de PDF y número de página para conservar la trazabilidad del producto.
-6. Si agrego una colección, añado su clave y etiqueta a `COLLECTIONS` en `assets/js/app.js` y agrego el acceso en `index.html` si debe aparecer como tarjeta de colección.
+6. Si agrego una colección, añado su clave y etiqueta a `COLLECTIONS` en `assets/js/app.js` y agrego el acceso en `index.html` si debe aparecer como tarjeta de colección. Los dos catálogos ATELO se mantienen bajo la clave única `atelo`; `pdf_origen` y `pagina` conservan la trazabilidad individual.
 
 ### WhatsApp
 

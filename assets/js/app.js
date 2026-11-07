@@ -6,6 +6,8 @@ const COLLECTIONS = {
   "monturas-marcas": "Multimarca",
   "epica-hombre": "EPICA hombre",
   "epica-dama": "EPICA dama",
+  // Una sola clave reúne los catálogos ATELO N1 y N2; cada producto conserva su PDF y página de origen.
+  "atelo": "ATELO",
 };
 
 // Número de WhatsApp del negocio en formato internacional, sin + ni espacios. Cámbialo aquí si el número cambia.
