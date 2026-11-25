@@ -95,6 +95,24 @@ a {
 .site-nav .nav-link:focus {
   color: var(--gold-light);
 }
+.ui-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex: none;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: -0.15em;
+}
+.nav-cta .ui-icon {
+  width: 12px;
+  height: 12px;
+  margin-left: 3px;
+}
 .nav-cta {
   display: inline-block;
   padding: 12px 17px;
@@ -219,8 +237,9 @@ p {
   background: var(--gold-light);
   color: var(--ink);
 }
-.button-gold span {
-  font-size: 18px;
+.button-gold > .ui-icon {
+  width: 18px;
+  height: 18px;
 }
 .hero-note {
   margin: 16px 0 0;
@@ -395,8 +414,9 @@ p {
   z-index: 2;
   right: 19px;
   bottom: 16px;
+  width: 22px;
+  height: 22px;
   color: var(--gold);
-  font-size: 22px;
 }
 .tile-chrome {
   background: linear-gradient(140deg, #111 20%, #27211a);
@@ -497,8 +517,9 @@ p {
   position: absolute;
   right: 14px;
   bottom: 14px;
+  width: 21px;
+  height: 21px;
   color: var(--gold-light);
-  font-size: 21px;
 }
 
 /* Búsqueda, filtros y tarjetas del catálogo cargado desde productos.json. */
@@ -741,8 +762,9 @@ p {
 .product-quote:hover {
   color: #fff;
 }
-.product-quote span {
-  font-size: 15px;
+.product-quote > .ui-icon {
+  width: 16px;
+  height: 16px;
 }
 .catalog-footnote {
   margin: 21px 0 0;
@@ -884,8 +906,9 @@ p {
   fill: currentColor;
   stroke: none;
 }
-.social-arrow {
-  font-size: 14px;
+.social-link .social-arrow {
+  width: 14px;
+  height: 14px;
 }
 .contact-decoration {
   position: absolute;
@@ -925,6 +948,11 @@ p {
   color: #c8c2b7;
   font-size: 10px;
   text-decoration: none;
+}
+.back-top .ui-icon {
+  width: 12px;
+  height: 12px;
+  margin-left: 2px;
 }
 .back-top:hover {
   color: var(--gold);

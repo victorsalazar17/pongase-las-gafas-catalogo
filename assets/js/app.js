@@ -88,6 +88,20 @@ function fillFilterOptions() {
   fillBrandCollections();
 }
 
+// Construye un icono SVG decorativo para que la flecha no dependa de la fuente del dispositivo.
+function createArrowIcon(className) {
+  const namespace = "http://www.w3.org/2000/svg";
+  const icon = document.createElementNS(namespace, "svg");
+  const path = document.createElementNS(namespace, "path");
+  icon.setAttribute("viewBox", "0 0 24 24");
+  icon.setAttribute("aria-hidden", "true");
+  icon.setAttribute("focusable", "false");
+  icon.classList.add("ui-icon", "ui-icon-up-right", className);
+  path.setAttribute("d", "M5 19 19 5M9 5h10v10");
+  icon.append(path);
+  return icon;
+}
+
 // Crea accesos rápidos para marcas multimarca con cuatro imágenes o más.
 function fillBrandCollections() {
   const counts = new Map();
@@ -125,10 +139,7 @@ function fillBrandCollections() {
     const brandName = document.createElement("strong");
     // textContent inserta el nombre como texto y evita interpretarlo como marcado HTML.
     brandName.textContent = brand;
-    const arrow = document.createElement("span");
-    arrow.className = "brand-tile-arrow";
-    arrow.setAttribute("aria-hidden", "true");
-    arrow.textContent = "↗";
+    const arrow = createArrowIcon("brand-tile-arrow");
 
     copy.append(countLabel, brandName);
     link.append(image, copy, arrow);
