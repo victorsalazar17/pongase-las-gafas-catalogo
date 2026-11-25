@@ -11,7 +11,7 @@ const COLLECTIONS = {
 };
 
 // Número de WhatsApp del negocio en formato internacional, sin + ni espacios. Cámbialo aquí si el número cambia.
-const WHATSAPP_NUMBER = "573242483479";
+const WHATSAPP_NUMBER = "573000768817";
 
 // Límite inicial de tarjetas; el botón “Mostrar más” añade otro grupo de este tamaño.
 const PAGE_SIZE = 24;

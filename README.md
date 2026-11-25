@@ -51,19 +51,6 @@ chatgpt-web-gafas/
         └── app.js
 ```
 
-## Cómo abrir el sitio
-
-El catálogo se carga con `fetch()` desde el JSON, así que debo abrirlo por HTTP o HTTPS. Abrir `index.html` directamente con doble clic (`file://`) puede impedir que el navegador cargue los productos.
-
-Desde la carpeta raíz puedo iniciar un servidor estático local con Python:
-
-```powershell
-py -m http.server 8000
-```
-
-Luego visito `http://localhost:8000`. Si `py` no está disponible, puedo ejecutar `python -m http.server 8000`. Para publicar el sitio en Netlify u otro hosting estático, debo conservar la estructura de carpetas y rutas.
-
-## Mantenimiento
 
 ### Archivos principales
 
